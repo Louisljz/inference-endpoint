@@ -1,0 +1,6 @@
+fastapi
+tensorflow
+mediapipe
+opencv-python
+numpy
+pydantic
