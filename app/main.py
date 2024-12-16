@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from .preprocessing import VideoProcessor
-from .model import VideoClassifier
+from preprocessing import VideoProcessor
+from model import VideoClassifier
 import urllib.request
 import tempfile
 import os
@@ -29,10 +29,10 @@ async def predict_video(video_request: VideoRequest):
         # Download video to temporary file
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as tmp_file:
             urllib.request.urlretrieve(video_request.url, tmp_file.name)
+            tmp_file.close()
             
             # Preprocess video
             input_data = processor.process_video(tmp_file.name)
-            print('Input data shape:', input_data.shape)
             
             # Get prediction
             prediction = model.predict(input_data)
@@ -42,7 +42,7 @@ async def predict_video(video_request: VideoRequest):
             
             return PredictionResponse(
                 label=prediction["label"],
-                confidence=float(prediction["confidence"])
+                confidence=round(prediction["confidence"], 2)
             )
             
     except Exception as e:

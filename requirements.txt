@@ -1,6 +1,6 @@
-fastapi
-tensorflow
-mediapipe
+fastapi[standard]
+pydantic
 opencv-python
 numpy
-pydantic
+tensorflow
+mediapipe

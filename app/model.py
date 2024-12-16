@@ -1,6 +1,8 @@
 import tensorflow as tf
 import json
 import os
+import numpy as np
+
 
 class VideoClassifier:
     def __init__(self):
@@ -20,8 +22,8 @@ class VideoClassifier:
         """
         if self.model is None:
             raise ValueError("Model not loaded")
-            
-        predictions = self.model.predict(input_data)
+        
+        predictions = self.model.predict(np.expand_dims(input_data, axis=0))
         
         # Get the predicted class and confidence
         predicted_class_idx = predictions.argmax()
